@@ -1,8 +1,6 @@
 const compareArrays = (arr1,arr2) => {
-  let arrayOne = arr1;
-  let arrayTwo = arr2;
-  let result = arrayOne.every((elem,indx,arr) => elem === arrayTwo[indx] && arrayOne.length === arrayTwo.length );
-  return result; // boolean
+  let result = arr1.every((elem,indx) => elem === arr2[indx]) && arr1.length === arr2.length ;
+  return result; 
 }
  
 const advancedFilter = (arr) => {
