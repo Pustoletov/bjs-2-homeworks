@@ -16,9 +16,9 @@ class PrintEditionItem {
  
   set state (numb) {
     if (numb < 0) {
-      this.state = 0;
+      this._state = 0;
     } else if (numb > 100) {
-      this.state = 100;
+      this._state = 100;
     }
     this._state = numb;
   }
@@ -39,7 +39,7 @@ class Book extends PrintEditionItem {
   constructor(author, name, releaseDate, pagesCount) {
     super(name, releaseDate, pagesCount)
     this.author = author;
-    this.type = "Book";
+    this.type = "book";
   }
 }
 
@@ -67,41 +67,35 @@ class DetectiveBook extends Book {
   }
 }
 
-class Library extends PrintEditionItem {
-  constructor(name, releaseDate, pagesCount) {
-    super(name, releaseDate, pagesCount);
+class Library {
+  constructor(name) {
     this.name = name;
     this.books = [];
   }
 
   addBook(book) {
-    if (this.state >= 30) {
+    if (book.state > 30) {
       this.books.push(book);
     }
   }
 
   findBookBy(type, value)  {
-    this.books.forEach((elem) => {
-      // console.log(elem)
-      for (let key in elem) {
-        // console.log(elem)
-        if (key === type && value === elem[key]) {
-        // console.log(elem.name)
-        return elem.name;
-       }
-      }
-    })
+    for (let prop of this.books) {
+      if (prop.hasOwnProperty(type) === true && prop[type] === value) {
+        return prop
+        // return prop.name(?)
+      } 
+    }
     return null;
   }
 
-  giveBookByName(bookName) {
-    this.books.forEach((elem) => {
-      for (let key in elem) {
-        if (bookName === elem[key]) {
-        return this.books.splice(elem,1)
-       }
-      }
-    })
+  giveBookByName(bookName)  {
+    for (let prop of this.books) {
+      if (prop.name === bookName) {
+        this.books.splice(prop,1)
+        return prop
+      } 
+    }
     return null;
   }
 }
